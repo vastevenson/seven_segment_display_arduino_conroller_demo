@@ -19,32 +19,24 @@ Digit : Segments On
 */
 
 // define which pins correspond to which of the seven segments: a - g
-int seg_a = 4;
-int seg_b = 5;
-int seg_c = 6;
-int seg_d = 7;
-int seg_e = 8;
-int seg_f = 9;
-int seg_g = 10;
-
-map<char,int> char_pin_map = 
-{
-	// use a map instead of arrays - better data structure for this :) 
-	char_pin_map.insert(pair<char,int>('a',4));
-	char_pin_map['b']=5;
-};
-
+#define A 4
+#define B 5
+#define C 6
+#define D 7
+#define E 8
+#define F 9
+#define G 10
 
 
 // the setup function runs once when you press reset or power the board
 void setup() {
-  pinMode(char_pin_map['a'], OUTPUT);
-  pinMode(seg_b, OUTPUT);
-  pinMode(seg_c, OUTPUT);
-  pinMode(seg_d, OUTPUT);
-  pinMode(seg_e, OUTPUT);
-  pinMode(seg_f, OUTPUT);
-  pinMode(seg_g, OUTPUT);
+  pinMode(A, OUTPUT);
+  pinMode(B, OUTPUT);
+  pinMode(C, OUTPUT);
+  pinMode(D, OUTPUT);
+  pinMode(E, OUTPUT);
+  pinMode(F, OUTPUT);
+  pinMode(G, OUTPUT);
 }
 
 
@@ -66,5 +58,5 @@ void blink_seg(int pin_id) {
 
 // the loop function runs over and over again forever
 void loop() {
-  blink_seg(char_pin_map['a']);
+  blink_seg(A);
 }

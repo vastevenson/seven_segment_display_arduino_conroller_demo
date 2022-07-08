@@ -27,7 +27,6 @@ Digit : Segments On
 #define F 9
 #define G 10
 
-
 // the setup function runs once when you press reset or power the board
 void setup() {
   pinMode(A, OUTPUT);
@@ -37,6 +36,8 @@ void setup() {
   pinMode(E, OUTPUT);
   pinMode(F, OUTPUT);
   pinMode(G, OUTPUT);
+
+
 }
 
 
@@ -59,4 +60,11 @@ void blink_seg(int pin_id) {
 // the loop function runs over and over again forever
 void loop() {
   blink_seg(A);
+  const int digit_4[] = {B, C, F, G};
+  int i = 0;
+  while (i < sizeof(digit_4)/sizeof(int))
+  {
+    Serial.print(i);
+    i++;
+  }
 }
