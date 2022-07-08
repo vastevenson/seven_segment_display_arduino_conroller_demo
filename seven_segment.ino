@@ -19,52 +19,65 @@ Digit : Segments On
 */
 
 // define which pins correspond to which of the seven segments: a - g
-#define A 4
-#define B 5
-#define C 6
-#define D 7
-#define E 8
-#define F 9
-#define G 10
+int a = 4;
+int b = 5;
+int c = 6;
+int d = 7;
+int e = 8;
+int f = 9;
+int g = 10;
+
 
 // the setup function runs once when you press reset or power the board
 void setup() {
-  pinMode(A, OUTPUT);
-  pinMode(B, OUTPUT);
-  pinMode(C, OUTPUT);
-  pinMode(D, OUTPUT);
-  pinMode(E, OUTPUT);
-  pinMode(F, OUTPUT);
-  pinMode(G, OUTPUT);
-
-
+  Serial.begin(9600); // send + receive serial monitor at 9600 baud rate 
+  // note if you don't have the above line, you won't see anything in serial monitor!
+  pinMode(a, OUTPUT);
+  pinMode(b, OUTPUT);
+  pinMode(c, OUTPUT);
+  pinMode(d, OUTPUT);
+  pinMode(e, OUTPUT);
+  pinMode(f, OUTPUT);
+  pinMode(g, OUTPUT);
 }
-
-
-// write method that turns all segs ON - use for loop 
-
-// write method that turns all segs OFF - use another for loop 
 
 // write method that takes an int as an input and turns on the appropriate segs as needed to display the int
 
-
-
-
-void blink_seg(int pin_id) {
-  digitalWrite(pin_id, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(1000);                       // wait for a second
-  digitalWrite(pin_id, LOW);    // turn the LED off by making the voltage LOW
-  delay(1000);                       // wait for a second
+void blink_all_segs(int *segs, int seg_len) {
+  turn_off_all_segs(segs, seg_len);  
+  delay(1000);                      
+  turn_on_all_segs(segs, seg_len);  
+  delay(1000);                       
 }
 
-// the loop function runs over and over again forever
-void loop() {
-  blink_seg(A);
-  const int digit_4[] = {B, C, F, G};
-  int i = 0;
-  while (i < sizeof(digit_4)/sizeof(int))
-  {
-    Serial.print(i);
-    i++;
+void turn_off_all_segs(int *segs, int seg_len) {
+  Serial.println("Turning off all segments...");
+  for (byte i = 0; i < seg_len; i++) {
+    digitalWrite(segs[i], LOW); // turn off the seg
   }
+}
+
+void turn_on_all_segs(int *segs, int seg_len) {
+  Serial.println("Turning on all segments...");
+  for (byte i = 0; i < seg_len; i++) {
+    digitalWrite(segs[i], HIGH);
+  }
+}
+
+void print_arr(int *segs, int seg_len) {
+  // print out the contents of an input array
+  for (int i = 0; i < seg_len; i++) {
+    Serial.print(segs[i]);
+  }
+}
+
+void loop() {
+  Serial.println("Starting new loop!");
+
+  int seg_len = 7;
+  int segs[seg_len] = {a,b,c,d,e,f,g};
+  // I had a lot of trouble dynamically calculating array length so I just hard coded it...
+//  print_arr(segs, seg_len);
+  // call method to turn off all the lights
+  blink_all_segs(segs, seg_len);
 }
