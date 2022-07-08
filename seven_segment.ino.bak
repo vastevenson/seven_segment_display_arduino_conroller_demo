@@ -43,43 +43,70 @@ void setup() {
 
 // write method that takes an int as an input and turns on the appropriate segs as needed to display the int
 
-void blink_all_segs(int *segs, int seg_len) {
-  turn_off_all_segs(segs, seg_len);  
-  delay(1000);                      
-  turn_on_all_segs(segs, seg_len);  
-  delay(1000);                       
+void blink_all_segs() {
+  turn_off_all_segs();  
+  delay(500);                      
+  turn_on_all_segs();  
+  delay(500);                       
 }
 
-void turn_off_all_segs(int *segs, int seg_len) {
+void turn_off_all_segs() {
+  int seg_len = 7;
+  int segs[seg_len] = {a,b,c,d,e,f,g};
   Serial.println("Turning off all segments...");
   for (byte i = 0; i < seg_len; i++) {
     digitalWrite(segs[i], LOW); // turn off the seg
   }
 }
 
-void turn_on_all_segs(int *segs, int seg_len) {
+void turn_on_all_segs() {
+  int seg_len = 7;
+  int segs[seg_len] = {a,b,c,d,e,f,g};
   Serial.println("Turning on all segments...");
   for (byte i = 0; i < seg_len; i++) {
     digitalWrite(segs[i], HIGH);
   }
 }
 
-void print_arr(int *segs, int seg_len) {
-  // print out the contents of an input array
-  for (int i = 0; i < seg_len; i++) {
-    Serial.print(segs[i]);
+void display_dig(int *arr, int arr_len) {
+
+  turn_off_all_segs();
+  
+  // turn on the segments to display a given digit
+  for (byte i = 0; i < arr_len; i++) {
+    digitalWrite(arr[i], HIGH);
   }
 }
 
 void loop() {
   Serial.println("Starting new loop!");
 
-  int seg_len = 7;
-  int segs[seg_len] = {a,b,c,d,e,f,g};
+
   // note that we need to hardcode and pass len of array to C++ functions 
   // this is because in C++, we are just passing the location in memory (pointer) of the array to the function 
-  // but the pointer, doesn't know how big the array is! 
+  // the pointer doesn't know how big its array is! 
   
-  // call method to turn off all the lights
-  blink_all_segs(segs, seg_len);
+  // call method to blink all the lights for testing
+//  blink_all_segs();
+
+  // define the segments that map to each pin
+  int one_dig[2] = {b,c};
+  int two_dig[5] = {a,b,g,e,d};
+  int three_dig[5] = {a,b,g,c,d};
+  int four_dig[4] = {f,g,b,c};
+  int five_dig[5] = {a,f,g,c,d};
+  int six_dig[5] = {f,e,g,c,d};
+  int seven_dig[3] = {a,b,c};
+  int eight_dig[7] = {a,b,c,d,e,f,g};
+  int nine_dig[5] = {a,b,c,f,g};
+  int zero_dig[6] = {a,b,c,d,e,f};
+  
+  display_dig(one_dig, 2);
+  delay(1000);
+  display_dig(two_dig, 5);
+  delay(1000);
+  display_dig(three_dig, 5);
+  delay(1000);
+  display_dig(four_dig, 4);
+  delay(1000);
 }
