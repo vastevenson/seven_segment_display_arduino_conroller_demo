@@ -43,36 +43,43 @@ void setup() {
 
 // write method that takes an int as an input and turns on the appropriate segs as needed to display the int
 
-void blink_all_segs(int *segs) {
-  turn_off_all_segs(segs);  
+void blink_all_segs(int *segs, int seg_len) {
+  turn_off_all_segs(segs, seg_len);  
   delay(1000);                      
-  turn_on_all_segs(segs);  
+  turn_on_all_segs(segs, seg_len);  
   delay(1000);                       
 }
 
-void turn_off_all_segs(int *segs) {
-  // this method takes the segs array and turns off all segs
+void turn_off_all_segs(int *segs, int seg_len) {
   Serial.println("Turning off all segments...");
-  for (byte i = 0; i < sizeof(segs)/sizeof(int); i++) {
+  for (byte i = 0; i < seg_len; i++) {
     digitalWrite(segs[i], LOW); // turn off the seg
   }
 }
 
-void turn_on_all_segs(int *segs) {
-  // this method takes the segs array and turns off all segs
-  Serial.print("Turning on all segments...");
-  for (byte i = 0; i < sizeof(segs)/sizeof(int); i++) {
-    Serial.print(i);
-    digitalWrite(segs[i], HIGH); // turn on the seg
+void turn_on_all_segs(int *segs, int seg_len) {
+  Serial.println("Turning on all segments...");
+  for (byte i = 0; i < seg_len; i++) {
+    digitalWrite(segs[i], HIGH);
   }
-  Serial.println();
 }
 
-// the loop function runs over and over again forever
+void print_arr(int *segs, int seg_len) {
+  // print out the contents of an input array
+  for (int i = 0; i < seg_len; i++) {
+    Serial.print(segs[i]);
+  }
+}
+
 void loop() {
-  Serial.println("testing!");
-//  blink_seg(A);
-  int segs[7] = {a,b,c,d,e,f,g};
+  Serial.println("Starting new loop!");
+
+  int seg_len = 7;
+  int segs[seg_len] = {a,b,c,d,e,f,g};
+  // note that we need to hardcode and pass len of array to C++ functions 
+  // this is because in C++, we are just passing the location in memory (pointer) of the array to the function 
+  // but the pointer, doesn't know how big the array is! 
+  
   // call method to turn off all the lights
-  blink_all_segs(segs);
+  blink_all_segs(segs, seg_len);
 }
