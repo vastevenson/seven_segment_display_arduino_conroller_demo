@@ -1,4 +1,4 @@
-### seven_segment_display_demo
+### Arduino Seven Segment Display Controller Demo
 
 Goal: demonstrate how to have Arduino control a seven segment display to display digits from 0 through 9 at one-second intervals on a loop. 
 
