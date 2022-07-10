@@ -17,7 +17,6 @@ int f = 9;
 int g = 10;
 
 
-// the setup function runs once when you press reset or power the board
 void setup() {
   Serial.begin(9600); // send + receive serial monitor at 9600 baud rate
   // note if you don't have the above line, you won't see anything in serial monitor!
@@ -29,8 +28,6 @@ void setup() {
   pinMode(f, OUTPUT);
   pinMode(g, OUTPUT);
 }
-
-// write method that takes an int as an input and turns on the appropriate segs as needed to display the int
 
 void blink_all_segs() {
   int delay_time_ms = 200;
@@ -62,29 +59,14 @@ void turn_on_all_segs() {
 }
 
 void display_dig(int *arr, int arr_len) {
-
   turn_off_all_segs();
-
-  // turn on the segments to display a given digit
   for (byte i = 0; i < arr_len; i++) {
     digitalWrite(arr[i], HIGH);
   }
 }
 
-void loop() {
-  Serial.println("Starting new loop!");
-
-
-  // note that we need to hardcode and pass in len of array to C++ functions
-  // this is because in C++, we are just passing the location in memory (pointer) of the array to the function
-  // the pointer doesn't know how big its array is!
-
-  // call method to blink all the lights for testing
-  int delay_time_ms = 1000;
-  delay(delay_time_ms);
-  blink_all_segs();
-  delay(delay_time_ms);
-
+void display_num(int num) {
+  // given a num, display the num on the seven segment display
   // define the segments that map to each pin
   int one_dig[2] = {b, c};
   int two_dig[5] = {a, b, g, e, d};
@@ -97,24 +79,59 @@ void loop() {
   int nine_dig[5] = {a, b, c, f, g};
   int zero_dig[6] = {a, b, c, d, e, f};
 
-  display_dig(zero_dig, 6);
+  turn_off_all_segs();
+
+  switch (num) {
+    case 0 :
+      display_dig(zero_dig, 6);
+      break;
+    case 1 :
+      display_dig(one_dig, 2);
+      break;
+    case 2 :
+      display_dig(two_dig, 5);
+      break;
+    case 3 :
+      display_dig(three_dig, 5);
+      break;
+    case 4 :
+      display_dig(four_dig, 4);
+      break;
+    case 5 :
+      display_dig(five_dig, 5);
+      break;
+    case 6 :
+      display_dig(six_dig, 5);
+      break;
+    case 7 :
+      display_dig(seven_dig, 3);
+      break;
+    case 8 :
+      display_dig(eight_dig, 7);
+      break;
+    case 9 :
+      display_dig(nine_dig, 5);
+      break;
+  }
+}
+
+void test_blink_all_segs() {
+  int delay_time_ms = 1000;
   delay(delay_time_ms);
-  display_dig(one_dig, 2);
+  blink_all_segs();
   delay(delay_time_ms);
-  display_dig(two_dig, 5);
-  delay(delay_time_ms);
-  display_dig(three_dig, 5);
-  delay(delay_time_ms);
-  display_dig(four_dig, 4);
-  delay(delay_time_ms);
-  display_dig(five_dig, 5);
-  delay(delay_time_ms);
-  display_dig(six_dig, 5);
-  delay(delay_time_ms);
-  display_dig(seven_dig, 3);
-  delay(delay_time_ms);
-  display_dig(eight_dig, 7);
-  delay(delay_time_ms);
-  display_dig(nine_dig, 5);
-  delay(delay_time_ms);
+}
+
+void test_display_all_nums() {
+  for (int i = 0; i <= 9; i++) {
+    display_num(i);
+    delay(100);
+  }
+}
+
+void loop() {
+  Serial.println("Starting new loop!");
+  // test_blink_all_segs();
+  // test_display_all_nums();
+  
 }

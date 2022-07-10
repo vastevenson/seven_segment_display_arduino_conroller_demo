@@ -33,10 +33,14 @@ void setup() {
 // write method that takes an int as an input and turns on the appropriate segs as needed to display the int
 
 void blink_all_segs() {
+  int delay_time_ms = 200;
+  for (int i = 0; i < 3; i++) {
+    turn_off_all_segs();
+    delay(delay_time_ms);
+    turn_on_all_segs();
+    delay(delay_time_ms);
+  }
   turn_off_all_segs();
-  delay(500);
-  turn_on_all_segs();
-  delay(500);
 }
 
 void turn_off_all_segs() {
@@ -71,12 +75,15 @@ void loop() {
   Serial.println("Starting new loop!");
 
 
-  // note that we need to hardcode and pass len of array to C++ functions
+  // note that we need to hardcode and pass in len of array to C++ functions
   // this is because in C++, we are just passing the location in memory (pointer) of the array to the function
   // the pointer doesn't know how big its array is!
 
   // call method to blink all the lights for testing
-  //  blink_all_segs();
+  int delay_time_ms = 1000;
+  delay(delay_time_ms);
+  blink_all_segs();
+  delay(delay_time_ms);
 
   // define the segments that map to each pin
   int one_dig[2] = {b, c};
@@ -91,23 +98,23 @@ void loop() {
   int zero_dig[6] = {a, b, c, d, e, f};
 
   display_dig(zero_dig, 6);
-  delay(1000);
+  delay(delay_time_ms);
   display_dig(one_dig, 2);
-  delay(1000);
+  delay(delay_time_ms);
   display_dig(two_dig, 5);
-  delay(1000);
+  delay(delay_time_ms);
   display_dig(three_dig, 5);
-  delay(1000);
+  delay(delay_time_ms);
   display_dig(four_dig, 4);
-  delay(1000);
+  delay(delay_time_ms);
   display_dig(five_dig, 5);
-  delay(1000);
+  delay(delay_time_ms);
   display_dig(six_dig, 5);
-  delay(1000);
+  delay(delay_time_ms);
   display_dig(seven_dig, 3);
-  delay(1000);
+  delay(delay_time_ms);
   display_dig(eight_dig, 7);
-  delay(1000);
+  delay(delay_time_ms);
   display_dig(nine_dig, 5);
-  delay(1000);
+  delay(delay_time_ms);
 }
