@@ -125,13 +125,12 @@ void test_blink_all_segs() {
 void test_display_all_nums() {
   for (int i = 0; i <= 9; i++) {
     display_num(i);
-    delay(100);
+    delay(1000);
   }
 }
 
 void loop() {
   Serial.println("Starting new loop!");
   // test_blink_all_segs();
-  // test_display_all_nums();
-  
+  test_display_all_nums();
 }
